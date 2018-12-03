@@ -4,8 +4,7 @@ A bash script to prevent merging a specific branch. Eg: `./protect-merge.sh $bra
 
 ## What is the need?
 
-At my current company, we don't merge our local development to our local feature branches. So I have setup this script. However, in the future I may add more hooks
-
+At my current company, we don't merge our local development to our local feature branches. So I have setup this script to prevent the same.
 
 ## Usage
 
