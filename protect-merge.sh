@@ -12,13 +12,8 @@ function usage() {
   -d    absolute path to the project folder" 1>&2; exit 1;
 }
 
-printf "\033[32m\n
-           -----------------------------------------------\n
-           Welcome to git-hook-prevent-merge. Let's begin.\n
-           -----------------------------------------------\n\n"
-
-function validate_args() {
-  printf "\033[39m Validating arguments\n\n"
+function collect_args() {
+  printf "\033[39m Collecting arguments\n\n"
   while getopts ":b:d:" opt; do
     case "${opt}" in
       b)
@@ -49,6 +44,14 @@ function validate_args() {
   shift $((OPTIND -1))
 }
 
+function validate_args() {
+  printf "\033[39m Validating arguments\n\n"
+  if [ -z "${branches}" ] || [ -z "${targetDir}" ]; then
+    printf "\033[31m No branches or targetDir found. Exiting..\n\n"
+    usage
+  fi
+}
+
 function validate_branches() {
   printf "\033[39m Validating branches\n\n"
   for branch in $(echo $branches | sed "s/,/ /g"); do
@@ -75,17 +78,20 @@ function copy_hook() {
 }
 
 function clean_up() {
+  printf "\033[39m Cleaning up\n\n"
   rm -r .hooks_config
   printf -- '\033[32m Success!!'
   exit 0
 }
 
-validate_args "$@"
+printf "\033[32m\n
+           -----------------------------------------------\n
+           Welcome to git-hook-prevent-merge. Let's begin.\n
+           -----------------------------------------------\n\n"
 
-if [ -z "${branches}" ] || [ -z "${targetDir}" ]; then
-  printf "\033[31m No branches or targetDir found. Exiting..\n\n"
-  usage
-fi
+collect_args "$@"
+
+validate_args
 
 validate_branches
 
