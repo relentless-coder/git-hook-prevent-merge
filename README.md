@@ -2,12 +2,12 @@
 
 A bash script to prevent merging a specific branch. Eg: `./protect-merge.sh $branch_to_prevent $path_to_project_folder`
 
-##What is the need?
+## What is the need?
 
 At my current company, we don't merge our local development to our local feature branches. So I have setup this script. However, in the future I may add more hooks
 
 
-##Usage
+## Usage
 
 1. Clone this repo
 2. Execute the bash script from within the repo folder.
@@ -24,4 +24,4 @@ This would place a `prepare-commit-msg` hook in your projects `.git/hooks` folde
  Not committing merge; use 'git commit' to complete the merge.
 ```
 
-**NOTE: You still need to run `git reset --merge` to completely reject the merge.
+**NOTE: You still need to run `git reset --merge` to completely reject the merge.**
