@@ -36,7 +36,7 @@ This would place a `prepare-commit-msg` hook in your project's `.git/hooks` fold
 
 **NOTE**: You still need to run `git reset --merge` to completely reject the merge.
 
-##Useful Information
+## Useful Information
 
 `-b` accepts either a single value or a list separated by a comma: **Note:** There shouldn't be any space between the list options, otherwise you'd see a `branch doesn't exist error.`
 
