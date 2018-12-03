@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+#replace_me_with_branches
+
+def merge?
+  ARGV[1] == "merge"
+end
+
+def merge_msg
+  @msg ||= `cat .git/MERGE_MSG`
+end
+
+def from_branch
+  @from_branch = merge_msg.match(/Merge branch '(.*?)'/)[1]
+end
+
+def from_forbidden_branch?
+  FORBIDDEN_BRANCHES.include?(from_branch)
+end
+
+if merge? && from_forbidden_branch?
+  puts
+  puts " ALERT!!!!!!!! ACTION NOT ALLOWED"
+  puts
+  puts " You are trying to merge #{from_branch} into your branch."
+  puts
+  puts " RUN `git reset --merge` to abort this merge"
+  exit 1
+end
