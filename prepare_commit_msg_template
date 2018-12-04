@@ -13,7 +13,12 @@ def merge_msg
 end
 
 def from_branch
-  @from_branch = merge_msg.match(/Merge branch '(.*?)'/)[1]
+  @is_merge_commit = merge_msg.match(/Merge branch '(.*?)'/)
+  if @is_merge_commit
+    @from_branch = merge_msg.match(/Merge branch '(.*?)'/)[1]
+  else
+    return true
+  end
 end
 
 def from_forbidden_branch?
