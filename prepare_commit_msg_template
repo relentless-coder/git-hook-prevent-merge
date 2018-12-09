@@ -4,6 +4,7 @@
 
 FORBIDDEN_BRANCHES=PROVIDED_BRANCHES.split(',')
 
+
 def merge?
   ARGV[1] == "merge"
 end
@@ -21,15 +22,19 @@ def from_branch
   end
 end
 
+def current_branch
+  return `git symbolic-ref --short HEAD`
+end
+
 def from_forbidden_branch?
   FORBIDDEN_BRANCHES.include?(from_branch)
 end
 
-if merge? && from_forbidden_branch?
+if merge? && from_forbidden_branch? && !FORBIDDEN_BRANCHES.include?("#{current_branch}".strip)
   puts
   puts "\033[31m ATTENTION!! Merge prevented"
   puts
-  puts "\033[39m You are trying to merge #{from_branch} into your branch."
+  puts "\033[39m You are trying to merge #{from_branch} into your branch #{current_branch}."
   puts
   puts "\033[39m RUN `git reset --merge` to abort this merge"
   puts
