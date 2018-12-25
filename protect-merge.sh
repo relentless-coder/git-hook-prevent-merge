@@ -5,6 +5,7 @@ set -e
 branches=""
 targetDir=""
 validBranches=""
+OS=`uname`
 
 function usage() {
   printf -- "\033[0mUsage: bash $0 < -b > < -d >\n\n
@@ -68,7 +69,12 @@ function setup_template() {
   printf "\033[39m Setting up prepare-commit-msg hook\n\n"
   mkdir -p .hooks_config && touch .hooks_config/prepare_commit_msg_template
   cat prepare_commit_msg_template > .hooks_config/prepare_commit_msg_template
-  sed -i '' "s/#provided_branches/PROVIDED_BRANCHES=\"$validBranches\"/" .hooks_config/prepare_commit_msg_template
+  if [[ "$OS" == 'Darwin' ]]
+  then
+    sed -i '' "s/#provided_branches/PROVIDED_BRANCHES=\"$validBranches\"/" .hooks_config/prepare_commit_msg_template
+  else
+    sed -i "s/#provided_branches/PROVIDED_BRANCHES=\"$validBranches\"/" .hooks_config/prepare_commit_msg_template
+  fi
 }
 
 function copy_hook() {
